@@ -12,14 +12,13 @@ app.secret_key = os.urandom(24)  # Secret key for session management
 
 load_dotenv()
 
-groq_api_key = os.getenv('GROQ_API_KEY')
+# groq_api_key = os.getenv('GROQ_API_KEY')
 
 # Initialize ChatGroq LLM
 
 llm = ChatGroq(
     model='llama3-70b-8192',
     temperature=0,
-    api_key=groq_api_key
 )
 
 PROMPT_TEMPLATE = """
