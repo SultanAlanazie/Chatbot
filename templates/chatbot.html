@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="icon" href="">
+  <title></title>
+
+  <!-- Montserrat Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+
+<body>
+  <div class="grid-container">
+
+    <!-- Header -->
+    <header class="header">
+      <div class="menu-icon" onclick="openSidebar()">
+        <span class="material-icons-outlined">menu</span>
+      </div>
+      <div class="header-left"></div>
+      <div class="header-right">
+        <span class="material-symbols-outlined">
+          person
+          </span> 
+      </div>
+    </header>
+    <!-- End Header -->
+
+    <!-- Sidebar -->
+    <aside id="sidebar">
+      <div class="sidebar-title">
+          <div class="sidebar-brand">
+              <span class="material-icons-outlined">inventory</span> Khabeer
+          </div>
+          <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
+      </div>
+      <ul class="sidebar-list">
+          <a href="/" target="_self">
+              <li class="sidebar-list-item">
+                  <span class="material-icons-outlined">dashboard</span> ----
+              </li>
+          </a>
+          <a href="/meeting" target="_self">
+              <li class="sidebar-list-item active">
+                  <span class="material-icons-outlined">model_training</span> ----
+              </li>
+          </a>
+          <a href="/chatbot" target="_self">
+              <li class="sidebar-list-item">
+                  <span class="material-icons-outlined">smart_toy</span> Khabeer AI
+              </li>
+          </a>
+          <a href="" target="_self">
+              <li class="sidebar-list-item">
+                  <span class="material-icons-outlined">logout</span> ----
+              </li>
+          </a>
+      </ul>
+  </aside>
+    <!-- End Sidebar -->
+
+    <!-- Main -->
+    <main class="main-container"> 
+      <div id="chatbot-container">
+        <div class="main-title">
+          <p class="font-weight-bold">Khabeer AI</p>
+      </div>
+        <!-- Chatbox -->
+        <div id="chat-box">
+          {% for message in messages %}
+            <div class="message {{ message.role }}">
+              <div class="message-box {{ message.role }}">
+                <strong>{{ message.role }}:</strong> {{ message.content }}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+
+        <!-- User input -->
+        <div id="chat-input">
+          <form method="POST" id="input-form">
+            <input type="text" name="user_input" placeholder="Ask your question:" required>
+            <button type="submit">Send</button>
+          </form>
+        </div>
+      </div>
+    </main>
+    <!-- End Main -->
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    let sidebarOpen = false;
+    const sidebar = document.getElementById('sidebar');
+
+    function openSidebar() {
+      if (!sidebarOpen) {
+        sidebar.classList.add('sidebar-responsive');
+        sidebarOpen = true;
+      }
+    }
+
+    function closeSidebar() {
+      if (sidebarOpen) {
+        sidebar.classList.remove('sidebar-responsive');
+        sidebarOpen = false;
+      }
+    }
+    
+    document.addEventListener('DOMContentLoaded', function () {
+  const chatBox = document.getElementById('chat-box');
+
+  function scrollToBottom() {
+    chatBox.scrollTop = chatBox.scrollHeight;  
+  }
+
+  scrollToBottom();
+
+  const observer = new MutationObserver(scrollToBottom);
+  observer.observe(chatBox, { childList: true, subtree: true });
+});
+
+  </script>
+</body>
+</html>
